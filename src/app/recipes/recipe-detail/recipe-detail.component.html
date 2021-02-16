@@ -1,14 +1,25 @@
-<div class="row">
+<div class="row" *ngIf="recipe">
   <div class="col-md-12">
-    <img src="" alt="" class="img-responsvie" />
+    <img
+      [src]="recipe.imagePath"
+      alt=""
+      class="img-responsvie"
+      style="max-height: 500px"
+    />
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="recipe">
   <div class="col-md-12">
-    <h1>Recipe Name</h1>
+    <h1>{{ recipe.name }}</h1>
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="recipe">
+  <div class="col-md-12">{{ recipe.description }}</div>
+</div>
+<div class="row" *ngIf="recipe">
+  <div class="col-md-12">Ingredients</div>
+</div>
+<div class="row" *ngIf="recipe">
   <div class="col-md-12">
     <div class="btn-group">
       <button type="button" class="btn btn-primary dropdown-toggle">
@@ -22,10 +33,4 @@
       </ul>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-12">Description</div>
-</div>
-<div class="row">
-  <div class="col-md-12">Ingredients</div>
 </div>

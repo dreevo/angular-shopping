@@ -1,10 +1,10 @@
-<app-header></app-header>
+<app-header (onTogglePage)="togglePage($event)"></app-header>
 <br />
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <app-recipes></app-recipes>
-      <app-shopping-list></app-shopping-list>
+      <app-recipes *ngIf="loadedPage === 'recipe'"></app-recipes>
+      <app-shopping-list *ngIf="loadedPage !== 'recipe'"></app-shopping-list>
     </div>
   </div>
 </div>
