@@ -1,18 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  templateUrl: './header.component.html'
 })
-export class HeaderComponent implements OnInit {
-  @Output() onTogglePage = new EventEmitter<string>();
+export class HeaderComponent {
+  @Output() featureSelected = new EventEmitter<string>();
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  togglePage(page: string) {
-    this.onTogglePage.emit(page);
+  onSelect(feature: string) {
+    this.featureSelected.emit(feature);
   }
 }

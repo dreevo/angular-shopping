@@ -1,16 +1,16 @@
-<a href="#" class="list-group-item clearfix" (click)="sendDetails()">
-  <div class="float-left">
+<a
+  href="#"
+  class="list-group-item clearfix"
+  (click)="onSelected()">
+  <div class="pull-left">
     <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-    <span class="float-right">
-      <img
-        [src]="recipe.imagePath"
-        alt="{{ recipe.name }}"
-        class="img-responsive"
-        style="max-height: 60px"
-      />
-    </span>
-    <p class="list-group-item-text" style="color: black">
-      {{ recipe.description }}
-    </p>
+    <p class="list-group-item-text">{{ recipe.description }}</p>
   </div>
+  <span class="pull-right">
+        <img
+          [src]="recipe.imagePath"
+          alt="{{ recipe.name }}"
+          class="img-responsive"
+          style="max-height: 50px;">
+      </span>
 </a>
