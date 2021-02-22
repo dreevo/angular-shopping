@@ -19,6 +19,8 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { RecipeService } from './recipes/recipe.service';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptor } from './auth/auth-interceptor.service';
+import { Store, StoreModule } from '@ngrx/store';
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { AuthInterceptor } from './auth/auth-interceptor.service';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    StoreModule.forRoot({ shoppingList: shoppingListReducer }),
   ],
   providers: [
     ShoppingListService,
