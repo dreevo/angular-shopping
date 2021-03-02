@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
-
+import * as fromApp from '../store/app.reducer';
+import * as authActions from './store/auth.actions';
 export interface AuthResponseData {
   kind: string;
   idToken: string;
@@ -17,9 +19,13 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  // user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Store<fromApp.AppState>
+  ) {}
   signUp(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
@@ -50,7 +56,15 @@ export class AuthService {
             res.idToken,
             expirationDate
           );
-          this.user.next(user);
+          // this.user.next(user);
+          this.store.dispatch(
+            new authActions.Login({
+              email: user.email,
+              userId: user.id,
+              token: user.getToken(),
+              expirationDate: expirationDate,
+            })
+          );
           this.autoLogout(+res.expiresIn * 1000);
           localStorage.setItem('userData', JSON.stringify(user));
         })
@@ -86,14 +100,23 @@ export class AuthService {
             res.idToken,
             expirationDate
           );
-          this.user.next(user);
+          // this.user.next(user);
+          this.store.dispatch(
+            new authActions.Login({
+              email: user.email,
+              userId: user.id,
+              token: user.getToken(),
+              expirationDate: expirationDate,
+            })
+          );
           this.autoLogout(+res.expiresIn * 1000);
           localStorage.setItem('userData', JSON.stringify(user));
         })
       );
   }
   logout() {
-    this.user.next(null);
+    // this.user.next(null);
+    this.store.dispatch(new authActions.Logout());
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
@@ -128,7 +151,15 @@ export class AuthService {
           new Date(userData._tokenExpirationDate).getTime() -
           new Date().getTime();
         this.autoLogout(expirationDuration);
-        this.user.next(loadedUser);
+        // this.user.next(loadedUser);
+        this.store.dispatch(
+          new authActions.Login({
+            email: loadedUser.email,
+            userId: loadedUser.id,
+            token: loadedUser.getToken(),
+            expirationDate: new Date(userData._tokenExpirationDate),
+          })
+        );
       }
     }
   }

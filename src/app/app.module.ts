@@ -20,7 +20,7 @@ import { RecipeService } from './recipes/recipe.service';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptor } from './auth/auth-interceptor.service';
 import { Store, StoreModule } from '@ngrx/store';
-import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
+import * as fromRoot from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({ shoppingList: shoppingListReducer }),
+    StoreModule.forRoot(fromRoot.appReducer),
   ],
   providers: [
     ShoppingListService,
